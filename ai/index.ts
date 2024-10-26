@@ -1,15 +1,15 @@
 import { anthropic } from '@ai-sdk/anthropic';
-import { experimental_wrapLanguageModel as wrapLanguageModel, LanguageModelV1FunctionToolCall, LanguageModelV1FinishReason, LanguageModelV1LogProbs } from 'ai';
+import { experimental_wrapLanguageModel as wrapLanguageModel, LanguageModelV1FinishReason, LanguageModelV1LogProbs } from 'ai';
 
 import { type Model } from '@/lib/model';
 import { customMiddleware } from './custom-middleware';
 
 type CustomModelResponse = {
   text?: string;
-  toolCalls?: LanguageModelV1FunctionToolCall[];
+  toolCalls?: any[];  // Adjust according to the actual type if known
   finishReason: LanguageModelV1FinishReason;
   logprobs?: LanguageModelV1LogProbs;
-  warnings?: { type: "unsupported-tool"; tool: LanguageModelV1FunctionToolCall | LanguageModelV1ProviderDefinedTool; details?: string }[];
+  warnings?: { type: "unsupported-tool"; tool: any; details?: string }[];  // Adjust according to the actual type if known
 };
 
 export const customModel = (modelName: Model['name']) => {
