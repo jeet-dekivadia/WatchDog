@@ -4,13 +4,19 @@ import { type Model } from '@/lib/model';
 import { customMiddleware } from './custom-middleware';
 
 export const customModel = (modelName: Model['name']) => {
-  // Create the model instance first
-  const modelInstance = anthropic(modelName);
+  const baseModel = anthropic(modelName);
   
-  // Type assertion to ensure compatibility
-  return wrapLanguageModel({
-    model: modelInstance,
-    prompt: (text) => `Analyze this statement for truthfulness and detect any misinformation: "${text}". Provide the percentage of factual content, misinformation, and justification for findings.`,
-    middleware: customMiddleware,
-  });
+  return {
+    generate: async (text: string) => {
+      const response = await baseModel.doGenerate({
+        messages: [{
+          role: 'user',
+          content: `Analyze this statement for truthfulness and detect any misinformation: "${text}". Provide the percentage of factual content, misinformation, and justification for findings.`
+        }]
+      });
+      
+      return response;
+    },
+    middleware: customMiddleware
+  };
 };
