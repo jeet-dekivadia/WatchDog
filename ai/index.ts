@@ -9,10 +9,9 @@ export const customModel = (modelName: Model['name']) => {
   return {
     generate: async (text: string) => {
       const response = await baseModel.doGenerate({
-        messages: [{
-          role: 'user',
-          content: `Analyze this statement for truthfulness and detect any misinformation: "${text}". Provide the percentage of factual content, misinformation, and justification for findings.`
-        }]
+        prompt: `Analyze this statement for truthfulness and detect any misinformation: "${text}". Provide the percentage of factual content, misinformation, and justification for findings.`,
+        temperature: 0.7,
+        maxTokens: 1000
       });
       
       return response;
