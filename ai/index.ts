@@ -3,7 +3,7 @@ import { experimental_wrapLanguageModel as wrapLanguageModel } from 'ai';
 import { type Model } from '@/lib/model';
 import { customMiddleware } from './custom-middleware';
 import type { 
-  LanguageModelV1CallSettings,
+  LanguageModelV1CallOptions,
   LanguageModelV1FunctionTool,
   LanguageModelV1ProviderDefinedTool,
   LanguageModelV1FunctionToolCall
@@ -12,7 +12,7 @@ import type {
 // Define the call settings warning type
 type UnsupportedSettingWarning = {
   type: "unsupported-setting";
-  setting: keyof LanguageModelV1CallSettings;
+  setting: keyof LanguageModelV1CallOptions;
   details?: string;
 };
 
